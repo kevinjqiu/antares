@@ -2,15 +2,15 @@ package com.appspot.antares.server.servlets
 
 import java.util.Enumeration
 import javax.servlet.http.{HttpServletRequest, HttpServletResponse, HttpServlet}
-import com.google.inject.Singleton
+import java.util.logging.Logger
+import com.google.inject.{Inject, Singleton}
 
 @Singleton
-class AntaresServlet extends HttpServlet {
+class AntaresServlet @Inject()(private val logger:Logger) extends HttpServlet {
 
   import AntaresServlet.{headerMap, parameterMap}
 
   override def doGet(req:HttpServletRequest, resp:HttpServletResponse) {
-
     val headers:Map[String, List[String]] = headerMap(req)
     val params = parameterMap(req)
 
