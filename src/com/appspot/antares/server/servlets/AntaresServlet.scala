@@ -111,25 +111,11 @@ object AntaresServlet {
    * Why the heck Java library doesn't have a convenient method
    * to encode the byte array to hex?????
    * Every other standard library has this feature!
-   */
-  def hexEncode(in:Array[Byte]) = {
-    val sb = new StringBuilder
-
-    def helper(rest:Array[Byte], sb:StringBuilder):StringBuilder = {
-      if (rest.size == 0)
-        sb
-      else {
-        val b:Int = rest.headOption.get
-        val msb = (b & 0xf0) >> 4
-        val lsb = (b & 0x0f)
-        sb.append((if (msb < 10) ('0' + msb).asInstanceOf[Char] else ('a' + (msb-10)).asInstanceOf[Char]))
-        sb.append((if (lsb < 10) ('0' + lsb).asInstanceOf[Char] else ('a' + (lsb-10)).asInstanceOf[Char]))
-        helper(rest.drop(1), sb)
-      }
-    }
-
-    helper(in, sb)
-    sb.toString
+   */  
+  def byteArrayToHex(bytes:Array[Byte]) = {
+    bytes.map[String](byte=>{
+      Integer.toHexString(0xff & byte)
+    }).mkString("")
   }
 
   def headerMap(req:HttpServletRequest):Map[String, List[String]] = {
